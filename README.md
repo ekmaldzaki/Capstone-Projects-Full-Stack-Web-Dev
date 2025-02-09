@@ -1,2 +1,2 @@
-# Capstone-Projects-Full-Stack-Web-Dev-One-Course
-This is a repository to store my capstone projects from my online course "Become a Full-Stack Web Developer with just ONE course." from "Dr. Angela Yu, Developer and Lead Instructor".
+# Capstone Project 2 - Personal Site
+This is the second capstone project entitled "Capstone Project 2 - Personal Site". Where I created a personal page containing about me, skills, projects, and contact persons. Using HTML, CSS, and Bootstrap framework.
