@@ -1,0 +1,41 @@
+<%- include('./partials/header.ejs') %>
+
+<div class="container my-5">
+  <div class="p-5 bg-body-tertiary rounded-3 position-relative">
+    <h2 class="text-center text-body-emphasis">Edit Your Writing</h2>
+    <form action="/update/<%= id %>" method="POST">
+      <div class="mb-3">
+        <label for="writeTitle" class="form-label">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="writeTitle"
+          name="title"
+          value="<%= post.title %>"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="writeContent" class="form-label">Content</label>
+        <textarea
+          class="form-control"
+          id="writeContent"
+          name="content"
+          rows="3"
+          required
+        >
+            <%= post.content %>
+          </textarea
+        >
+      </div>
+      <button
+        type="submit"
+        class="btn btn-dark mb-3 position-absolute bottom-0 start-50 translate-middle-x"
+      >
+        Update
+      </button>
+    </form>
+  </div>
+</div>
+
+<%- include('./partials/footer.ejs') %>
