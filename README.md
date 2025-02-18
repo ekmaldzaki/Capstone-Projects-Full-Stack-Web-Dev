@@ -1,2 +1,15 @@
-# Capstone-Projects-Full-Stack-Web-Dev-One-Course
-This is a repository to store my capstone projects from my online course "Become a Full-Stack Web Developer with just ONE course." from "Dr. Angela Yu, Developer and Lead Instructor".
+# Capstone Project 3 - Blog Web
+This is the third capstone project entitled "Capstone Project 3 - Blog Web". Where I created a blog web with features consisting of write, edit, and delete writing that has been created by the user.
+
+# Technologies Used
+
+## Frontend
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+
+## Backend
+- Node.js
+- Express
+- EJS
