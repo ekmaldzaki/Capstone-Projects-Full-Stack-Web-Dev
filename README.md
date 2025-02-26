@@ -1,2 +1,15 @@
-# Capstone-Projects-Full-Stack-Web-Dev-One-Course
-This is a repository to store my capstone projects from my online course "Become a Full-Stack Web Developer with just ONE course." from "Dr. Angela Yu, Developer and Lead Instructor".
+# Capstone Project 4 - Use a Public API
+This is the fourth capstone project entitled "Capstone Project 4 - Use a Public API".
+
+# Technologies Used
+
+## Frontend
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+
+## Backend
+- Node.js
+- Express
+- EJS
