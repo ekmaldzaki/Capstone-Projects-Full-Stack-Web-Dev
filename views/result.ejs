@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnimeSearch</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Search Results</h1>
+      <a href="/">Back to Search</a>
+      <div class="anime-list">
+        <% animeList.forEach(anime => { %>
+            <div class="anime-card" onclick="openModal(
+                '<%= anime.title.replace(/'/g, "\\'") %>',
+                '<%= anime.images.jpg.image_url %>',
+                '<%= anime.episodes || "Unknown" %>',
+                '<%= anime.score || "N/A" %>',
+                '<%= anime.synopsis ? anime.synopsis.replace(/'/g, `\\'`).replace(/\n/g, ' ').replace(/\r/g, ' ') : 'No synopsis available.' %>'
+            )">            
+                <img src="<%= anime.images.jpg.image_url %>" alt="<%= anime.title %>">
+                <h3><%= anime.title %></h3>
+                <p><strong>Episodes:</strong> <%= anime.episodes || "Unknown" %></p>
+                <p><strong>Score:</strong> <%= anime.score || "N/A" %></p>
+                <p><strong>Synopsis:</strong> <%= anime.synopsis ? anime.synopsis.substring(0, 200) + "..." : "No synopsis available." %></p>
+            </div>
+        <% }); %>
+    </div>
+    </div>
+
+    <!-- Modal Structure -->
+<div id="animeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modal-img" src="" alt="">
+        <h2 id="modal-title"></h2>
+        <p><strong>Episodes:</strong> <span id="modal-episodes"></span></p>
+        <p><strong>Score:</strong> <span id="modal-score"></span></p>
+        <p id="modal-synopsis"></p>
+    </div>
+</div>
+
+<script>
+    function openModal(title, img, episodes, score, synopsis) {
+        document.getElementById("modal-title").textContent = title;
+        document.getElementById("modal-img").src = img;
+        document.getElementById("modal-episodes").textContent = episodes;
+        document.getElementById("modal-score").textContent = score;
+        document.getElementById("modal-synopsis").textContent = synopsis;
+    
+        document.getElementById("animeModal").style.display = "block";
+    }
+    
+    function closeModal() {
+        document.getElementById("animeModal").style.display = "none";
+    }
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById("animeModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+  </body>
+</html>
