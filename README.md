@@ -1,6 +1,6 @@
 # Capstone Project 5 - Book Storage
 
-This is the fourth capstone project entitled "Capstone Project 5 - Book Storage".
+This is the fifth capstone project entitled "Capstone Project 5 - Book Storage".
 
 # Technologies Used
 
