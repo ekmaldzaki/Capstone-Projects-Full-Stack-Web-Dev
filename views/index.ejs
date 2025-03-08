@@ -3,10 +3,287 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
+    <title>Book Storage</title>
+    <link rel="icon" type="image/x-icon" href="/assets/icons/bookshelf.png" />
     <link rel="stylesheet" href="/styles/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
   </head>
-  <body>
-    <h1><%= message %></h1>
+  <body class="dark-background">
+
+    <!-- heroes section -->
+    <section>
+      <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold text-light">Welcome to Book Storage</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4 text-light">
+            This website is used to store any books you have read complete with
+            reviews. Complete with features to add and delete books you have
+            read with reviews.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- content section -->
+    <section>
+      <div class="container my-4">
+        <h2 class="text-center mb-4 text-light">Book Reviews</h2>
+
+        <div class="text-center my-4">
+            <button
+              class="btn btn-light"
+              data-bs-toggle="modal"
+              data-bs-target="#addReviewModal"
+            >
+              Add Review
+            </button>
+          </div>
+
+        <div class="row" id="review-container">
+        <% reviews.sort((a, b) => a.book_name.localeCompare(b.book_name)); %> 
+          <% reviews.forEach(review => { %>
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title"><%= review.book_name %></h5>
+                <p class="card-text"><%= review.book_review %></p>
+                <p class="card-text">
+                  <strong>Score:</strong> <%= review.review_score %>/10
+                </p>
+              </div>
+              <div class="card-footer text-center">
+                <button 
+                class="btn btn-primary" 
+                onclick="openEditModal(<%= review.id %>, '<%= review.book_name.replace(/'/g, "\\'").replace(/"/g, '&quot;') %>', '<%= review.book_review.replace(/'/g, "\\'").replace(/"/g, '&quot;') %>', <%= review.review_score %>)">
+                Edit
+              </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="confirmDelete(<%= review.id %>)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+
+
+      </div>
+
+      <!-- Add Review Modal -->
+      <div
+        class="modal fade"
+        id="addReviewModal"
+        tabindex="-1"
+        aria-labelledby="addReviewLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addReviewLabel">Add a Book Review</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form action="/add-review" method="POST">
+                <div class="mb-3">
+                  <label for="book_name" class="form-label">Book Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="book_name"
+                    name="book_name"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="book_review" class="form-label">Review</label>
+                  <textarea
+                    class="form-control"
+                    id="book_review"
+                    name="book_review"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="review_score" class="form-label"
+                    >Score (1-10)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="review_score"
+                    name="review_score"
+                    min="1"
+                    max="10"
+                    required
+                  />
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success">
+                    Submit Review
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Modal -->
+      <div
+        class="modal fade"
+        id="deleteReviewModal"
+        tabindex="-1"
+        aria-labelledby="deleteReviewLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteReviewLabel">
+                Confirm Deletion
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this review?</p>
+              <form id="deleteForm" action="/delete-review" method="POST">
+                <input type="hidden" id="deleteReviewId" name="id" />
+                <div class="text-center">
+                  <button type="submit" class="btn btn-danger">
+                    Yes, Delete
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Review Modal -->
+      <div
+        class="modal fade"
+        id="editReviewModal"
+        tabindex="-1"
+        aria-labelledby="editReviewLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editReviewLabel">Edit Book Review</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="editForm" action="/edit-review" method="POST">
+                <input type="hidden" id="editReviewId" name="id" />
+                <div class="mb-3">
+                  <label for="edit_book_name" class="form-label"
+                    >Book Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="edit_book_name"
+                    name="book_name"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="edit_book_review" class="form-label"
+                    >Review</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="edit_book_review"
+                    name="book_review"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="edit_review_score" class="form-label"
+                    >Score (1-10)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="edit_review_score"
+                    name="review_score"
+                    min="1"
+                    max="10"
+                    required
+                  />
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function confirmDelete(id) {
+          document.getElementById("deleteReviewId").value = id;
+          var deleteModal = new bootstrap.Modal(
+            document.getElementById("deleteReviewModal")
+          );
+          deleteModal.show();
+        }
+
+        function openEditModal(id, bookName, bookReview, reviewScore) {
+          document.getElementById("editReviewId").value = id;
+          document.getElementById("edit_book_name").value = bookName;
+          document.getElementById("edit_book_review").value = bookReview;
+          document.getElementById("edit_review_score").value = reviewScore;
+
+          var editModal = new bootstrap.Modal(
+            document.getElementById("editReviewModal")
+          );
+          editModal.show();
+        }
+      </script>
+    </section>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

@@ -1,10 +1,7 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  text-align: center;
-  padding: 50px;
+.dark-background {
+  background-color: #252525;
 }
 
-h1 {
-  color: red;
+.justify-mytext {
+  text-align: justify;
 }
