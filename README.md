@@ -1,4 +1,12 @@
-# Capstone-Projects-Full-Stack-Web-Dev-One-Course
-This is a repository to store my capstone projects from my online course "Become a Full-Stack Web Developer with just ONE course." from "Dr. Angela Yu, Developer and Lead Instructor".
+# Capstone Project 6 - Keeper App
 
-Switch to another branch to see the projects.
+This is the fifth capstone project entitled "Capstone Project 6 - Keeper App".
+
+# Technologies Used
+
+## Frontend
+
+- HTML
+- CSS
+- JavaScript
+- React
